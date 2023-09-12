@@ -1,5 +1,7 @@
 # CDCR Github Workshop September 2023
 
+Hello World
+
 Some changes from William ---- This repository is for the CDCR Github 3-Day Workshop in September 2023. As the workshop delivery will be as open and candid as possible within the NDA, no recording will be allowed. However, the content will be made available here for reference and review.
 
 ## Who is this for?
