@@ -1,4 +1,4 @@
-# Octo Kitties say
+# Octo Kitties look so happy!
 
      /\_/\          '-___-'          /\_/\
     / -.- \         / 0.0 \         / 0.0 \
