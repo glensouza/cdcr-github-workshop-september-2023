@@ -104,6 +104,7 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 - GitHub Packages
   - Creating a GitHub Package
   - Publishing a GitHub Package
+  - [Package Types](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages)
 - Storing and managing secrets
   - GitHub Secrets
 - Q&A
