@@ -92,19 +92,19 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 - [GitHub Pages](https://pages.github.com)
   - Creating a GitHub Pages site
   - Hosting a website on GitHub Pages
+- GitHub extensions
+  - [GitHub Actions](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions)
+  - [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
 - [Continuous integration and continuous delivery (CI/CD)](https://docs.github.com/en/actions)
   - Setting up CI/CD with GitHub Actions
     - Creating a GitHub action
     - Running a GitHub action
-    - GitHub Packages
-      - Creating a GitHub Package
-      - Publishing a GitHub Package
 - Lunch (*1 hour*)
+- GitHub Packages
+  - Creating a GitHub Package
+  - Publishing a GitHub Package
 - Storing and managing secrets
   - GitHub Secrets
-- GitHub extensions
-  - IDE extensions
-  - Third-party tools
 - Q&A
 - [More GitHub LevelUp Resources](#more-github-levelup-resources)
 
