@@ -82,6 +82,7 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 - BREAK (*15 minutes*)
 - Advanced GitHub features
   - Branching strategies
+- What is CI/CD?
 - Q&A
 - [More GitHub LevelUp Resources](#more-github-levelup-resources)
 
@@ -92,7 +93,6 @@ Regardless of your level of experience with GitHub, you will leave this workshop
   - Creating a GitHub Pages site
   - Hosting a website on GitHub Pages
 - [Continuous integration and continuous delivery (CI/CD)](https://docs.github.com/en/actions)
-  - What is CI/CD?
   - Setting up CI/CD with GitHub Actions
     - Creating a GitHub action
     - Running a GitHub action
@@ -102,8 +102,6 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 - Lunch (*1 hour*)
 - Storing and managing secrets
   - GitHub Secrets
-  - Azure Key Vault
-- Advanced GitHub Actions
 - GitHub extensions
   - IDE extensions
   - Third-party tools
