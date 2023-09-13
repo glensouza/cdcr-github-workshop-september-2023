@@ -21,6 +21,7 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 - This workshop is not intended to teach you how to code
   - When code is referenced in the workshop it will be provided to you
     - 🚨 *Spoiler Alert*: we will build and deploy a simple web application using .NET and Blazor WASM to both GitHub Pages and Azure
+      - [GitHub Page](https://glensouza.github.io/cdcr-github-workshop-september-2023)
   - If you have questions related to the provided code you may ask them during the Q&A section of the workshop
 - This workshop is not intended to teach you how to use Git Commands
   - You will be shown the commands needed primarily using the GitHub Desktop client application
