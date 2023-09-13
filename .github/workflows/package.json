@@ -1,0 +1,11 @@
+{
+  "name": "@glensouza/package-demo",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "author": "",
+  "license": "MIT"
+}
