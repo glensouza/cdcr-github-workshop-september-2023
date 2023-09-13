@@ -46,7 +46,7 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 ### Personal Accounts
 
 - GitHub (***required***) <https://github.com>
-- Azure (***optional***)
+- Azure (***optional***) <https://azure.microsoft.com/en-us/free>
 
 ## Hands-on training agenda
 
