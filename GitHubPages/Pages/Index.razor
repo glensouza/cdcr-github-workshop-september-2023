@@ -36,7 +36,7 @@
         categoryId = selectedCategory;
     }
 
-    private void StartGame() => NavigationManager.NavigateTo($"/game/{categoryId}");
+    private void StartGame() => NavigationManager.NavigateTo($"game/{categoryId}");
 
-    private void ShowScores() => NavigationManager.NavigateTo("/scores");
+    private void ShowScores() => NavigationManager.NavigateTo("scores");
 }

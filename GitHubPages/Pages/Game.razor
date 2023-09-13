@@ -208,7 +208,7 @@
         checkedValue = string.Empty;
     }
 
-    private void ShowScores() => NavigationManager.NavigateTo("/scores");
+    private void ShowScores() => NavigationManager.NavigateTo("scores");
 
     private async Task PlayAgain()
     {
@@ -223,5 +223,5 @@
         loading = false;
     }
 
-    private void ChangeCategory() => NavigationManager.NavigateTo("/");
+    private void ChangeCategory() => NavigationManager.NavigateTo("index");
 }
