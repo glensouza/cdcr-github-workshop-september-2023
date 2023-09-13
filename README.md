@@ -93,8 +93,8 @@ Regardless of your level of experience with GitHub, you will leave this workshop
   - Creating a GitHub Pages site
   - Hosting a website on GitHub Pages
 - GitHub extensions
-  - IDE extensions
-  - Third-party tools
+  - [GitHub Actions](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions)
+  - [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
 - [Continuous integration and continuous delivery (CI/CD)](https://docs.github.com/en/actions)
   - Setting up CI/CD with GitHub Actions
     - Creating a GitHub action
