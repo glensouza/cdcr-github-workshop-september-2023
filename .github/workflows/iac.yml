@@ -1,0 +1,144 @@
+name: Provision Infrastructure
+
+on:
+  push:
+    branches:
+      - "main" 
+    paths:
+      - ".github/workflows/iac.yml"
+      - "IaC/**"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  cleanup-resources:
+    runs-on: ubuntu-latest
+    environment: CleanupResources
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Remove www Cloudflare DNS
+      env:
+        APIKey: ${{ secrets.CLOUDFLARE_APIKEY }}
+        ZoneId: ${{ secrets.CLOUDFLARE_ZONEID }}
+      run: ./IaC/dnsDelete.ps1
+      shell: pwsh
+
+    - name: Log into Azure
+      uses: azure/login@v1
+      with:
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: Empty Out Azure Environment
+      uses: azure/CLI@v1
+      continue-on-error: true
+      with:
+        azcliversion: 2.48.1
+        inlineScript: az group delete --name ${{ vars.RESOURCE_NAME }} --yes
+  
+  provision-resources:
+    runs-on: ubuntu-latest
+    environment: 
+      name: IaCDeloy
+      url: ${{ steps.swahostname.outputs.DEFAULT_HOSTNAME }}
+    needs: cleanup-resources
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log into Azure
+      uses: azure/login@v1
+      with:
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: Provision Resources
+      uses: azure/arm-deploy@v1
+      id: deploy
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        scope: subscription
+        region: centralus
+        template: ./IaC/main.bicep
+        parameters: location=centralus commonResourceName=${{ vars.RESOURCE_NAME }}
+        failOnStdErr: false
+        deploymentName: bicep-ci-${{ github.run_id }}
+
+    - name: Get SWA Default Hostname
+      id: swahostname
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: echo DEFAULT_HOSTNAME=$(az staticwebapp show -n ${{ vars.RESOURCE_NAME }} --query 'defaultHostname') | tr -d '"' >> "$GITHUB_OUTPUT" 
+
+    - name: Set Cloudflare DNS
+      env:
+        APIKey: ${{ secrets.CLOUDFLARE_APIKEY }}
+        ZoneId: ${{ secrets.CLOUDFLARE_ZONEID }}
+        HostName: ${{ steps.swahostname.outputs.DEFAULT_HOSTNAME }}
+      run: ./IaC/dnsCreate.ps1
+      shell: pwsh
+
+  build-and-deploy-apps:
+    runs-on: ubuntu-latest
+    environment: AppDeploy
+    needs: provision-resources
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build and Deploy Function App
+      uses: ./.github/workflows/function
+      with:
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        RESOURCE_NAME: ${{ vars.RESOURCE_NAME }}
+
+    - name: Build and Deploy Web App
+      uses: ./.github/workflows/web
+      with:
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        RESOURCE_NAME: ${{ vars.RESOURCE_NAME }}
+
+  resolve-dns:
+    runs-on: ubuntu-latest
+    environment: 
+      name: ResolveDNS
+      url: 'https://play.triviagame.party'
+    needs: build-and-deploy-apps
+    steps:
+      
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log into Azure
+      uses: azure/login@v1
+      with:
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: Add custom domain to web app
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        scope: resourcegroup
+        resourceGroupName: ${{ vars.RESOURCE_NAME }}
+        region: centralus
+        template: ./IaC/dns.bicep
+        parameters: commonResourceName=${{ vars.RESOURCE_NAME }}
+        failOnStdErr: false
+        deploymentName: bicep-dns-ci-${{ github.run_id }}
