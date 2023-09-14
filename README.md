@@ -134,6 +134,7 @@ Regardless of your level of experience with GitHub, you will leave this workshop
 - [GitHub Actions](https://learn.microsoft.com/en-us/users/githubtraining/collections/n5p4a5z7keznp5)
 - [GitHub Advanced Security](https://learn.microsoft.com/en-us/users/githubtraining/collections/rqymc6yw8q5rey)
 - [GitHub Administration](https://learn.microsoft.com/en-us/users/githubtraining/collections/mom7u1gzjdxw03)
+- [GitHub Guide for Collaboration](https://github.blog/2023-08-04-a-checklist-and-guide-to-get-your-repository-collaboration-ready)
 
 ## Roadmaps
 
